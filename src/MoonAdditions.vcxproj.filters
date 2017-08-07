@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="lua_texture.cpp">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="texture_manager.cpp" />
+    <ClCompile Include="sprite_drawer.cpp" />
+    <ClCompile Include="lua_bone.cpp">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="lua_quat.cpp">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="lua_vector.cpp">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="lua_matrix.cpp">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="text_drawer.cpp" />
+    <ClCompile Include="lua_textdraw.cpp">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="lua_txd.cpp">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="lua_general.cpp">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="lua_component.cpp">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="lua_shape.cpp">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="shape_drawer.cpp" />
+    <ClCompile Include="spotlight_drawer.cpp" />
+    <ClCompile Include="vehicle_renderer.cpp" />
+    <ClCompile Include="additional_events.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="lua_texture.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="texture_manager.h" />
+    <ClInclude Include="filesystem.h" />
+    <ClInclude Include="sol_custom_types.hpp" />
+    <ClInclude Include="sprite_drawer.h" />
+    <ClInclude Include="lua_bone.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="lua_quat.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="lua_vector.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="lua_matrix.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="text_drawer.h" />
+    <ClInclude Include="drawer.h" />
+    <ClInclude Include="lua_textdraw.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="singleton.h" />
+    <ClInclude Include="lua_txd.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="lua_general.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="optional.h" />
+    <ClInclude Include="lua_component.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="lua_shape.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="shape_drawer.h" />
+    <ClInclude Include="spotlight_drawer.h" />
+    <ClInclude Include="forward_declarations.h" />
+    <ClInclude Include="vehicle_renderer.h" />
+    <ClInclude Include="pool_object_extender.h" />
+    <ClInclude Include="additional_events.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="lua">
+      <UniqueIdentifier>{1e1aa6b5-dbd0-4ced-82da-400c058358dd}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

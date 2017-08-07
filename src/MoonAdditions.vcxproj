@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{051CEF9B-F1DF-4A05-9F8F-B6D408F85304}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>moonadditions</RootNamespace>
+    <WindowsTargetPlatformVersion>7.1</WindowsTargetPlatformVersion>
+    <ProjectName>MoonAdditions</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140_xp</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <TargetName>$(ProjectName)</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;LUA_BUILD_AS_DLL;MODULE_NAME=$(ProjectName);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(ProjectDir)\libs\lua;$(ProjectDir)\libs\sol2;$(ProjectDir)\libs\plugin-sdk\;$(ProjectDir)\libs\plugin-sdk\plugin_sa\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/Zc:threadSafeInit- %(AdditionalOptions)</AdditionalOptions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <DisableSpecificWarnings>4503</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>$(ProjectDir)\libs\lua\lua51.lib;$(ProjectDir)\libs\plugin-sdk\plugin_sa.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy /Y "$(OutDir)$(TargetName)$(TargetExt)" /B "D:\GTA\SAMP\moonloader\lib\$(TargetName)$(TargetExt)" /B</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="additional_events.cpp" />
+    <ClCompile Include="lua_bone.cpp" />
+    <ClCompile Include="lua_component.cpp" />
+    <ClCompile Include="lua_general.cpp" />
+    <ClCompile Include="lua_matrix.cpp" />
+    <ClCompile Include="lua_quat.cpp" />
+    <ClCompile Include="lua_shape.cpp" />
+    <ClCompile Include="lua_textdraw.cpp" />
+    <ClCompile Include="lua_texture.cpp" />
+    <ClCompile Include="lua_txd.cpp" />
+    <ClCompile Include="lua_vector.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="shape_drawer.cpp" />
+    <ClCompile Include="spotlight_drawer.cpp" />
+    <ClCompile Include="sprite_drawer.cpp" />
+    <ClCompile Include="texture_manager.cpp" />
+    <ClCompile Include="text_drawer.cpp" />
+    <ClCompile Include="vehicle_renderer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="additional_events.h" />
+    <ClInclude Include="drawer.h" />
+    <ClInclude Include="filesystem.h" />
+    <ClInclude Include="forward_declarations.h" />
+    <ClInclude Include="lua_bone.h" />
+    <ClInclude Include="lua_component.h" />
+    <ClInclude Include="lua_general.h" />
+    <ClInclude Include="lua_matrix.h" />
+    <ClInclude Include="lua_quat.h" />
+    <ClInclude Include="lua_shape.h" />
+    <ClInclude Include="lua_textdraw.h" />
+    <ClInclude Include="lua_texture.h" />
+    <ClInclude Include="lua_txd.h" />
+    <ClInclude Include="lua_vector.h" />
+    <ClInclude Include="optional.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="pool_object_extender.h" />
+    <ClInclude Include="shape_drawer.h" />
+    <ClInclude Include="singleton.h" />
+    <ClInclude Include="sol_custom_types.hpp" />
+    <ClInclude Include="spotlight_drawer.h" />
+    <ClInclude Include="sprite_drawer.h" />
+    <ClInclude Include="texture_manager.h" />
+    <ClInclude Include="text_drawer.h" />
+    <ClInclude Include="vehicle_renderer.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
