@@ -13,7 +13,7 @@ API Includes:
 - Loading TXDs from a file and working with ones loaded by game
 - Many other functions: drawing lighting, shadows, coronas, spotlights, changing entities transparency, getting sun color, size and position, getting all existing characters, vehicles and objects, creating projectiles, interaction with the entity's matrix, etc
 
-For documentation check out the [Wiki](https://github.com/THE-FYP/MoonAdditions/wiki) (*WIP*) and [examples](examples/) for usage.
+For documentation check out the [Wiki](https://github.com/THE-FYP/MoonAdditions/wiki) and [examples](examples/) for usage.
 
 ## Installation
 Download `MoonAdditions.dll` from the [latest release](https://github.com/THE-FYP/MoonAdditions/releases/latest) and copy it in your `moonloader/lib` folder.
