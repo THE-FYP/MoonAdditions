@@ -9,7 +9,6 @@ API Includes:
 - Drawing primitive 2D shapes
 - Getting information of character bones
 - Interaction with vehicle components, recoloring and retexturing
-- Working with loaded by game TXDs and with loaded from file
 - Loading TXDs from a file and working with ones loaded by game
 - Many other functions: drawing lighting, shadows, coronas, spotlights, changing entities transparency, getting sun color, size and position, getting all existing characters, vehicles and objects, creating projectiles, interaction with the entity's matrix, etc
 
