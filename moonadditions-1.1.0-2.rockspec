@@ -1,5 +1,7 @@
+rockspec_format = "3.0"
 package = "moonadditions"
-version = "1.1.0-1"
+version = "1.1.0-2"
+
 source = {
    url = "git+https://github.com/THE-FYP/MoonAdditions.git",
    tag = "v1.1.0"
