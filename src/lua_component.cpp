@@ -63,7 +63,7 @@ namespace lua_component
 
 		void setColor(CRGBA color)
 		{
-			VehicleRenderer::get()->setMaterialColor(_vehicle, _material, _geometry, {color.red, color.green, color.blue, color.alpha});
+			VehicleRenderer::get()->setMaterialColor(_vehicle, _material, _geometry, {color.r, color.g, color.b, color.a});
 		}
 
 		CRGBA getColor() const
@@ -132,7 +132,7 @@ namespace lua_component
 			return (RpAtomicGetVisibilityPlugin(_atomic)->m_wFlags & flag) != 0;
 		}
 
-		void setAtomicFlag(unsigned int flag, bool value)
+		void setAtomicFlag(unsigned short flag, bool value)
 		{
 			if (value)
 				CVisibilityPlugins::SetAtomicFlag(_atomic, flag);

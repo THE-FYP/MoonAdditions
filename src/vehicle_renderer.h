@@ -23,7 +23,6 @@
 
 #pragma once
 #include "singleton.h"
-#include "extender/VehicleExtender_SA.h"
 #include "forward_declarations.h"
 #include "pool_object_extender.h"
 

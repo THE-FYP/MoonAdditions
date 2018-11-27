@@ -22,7 +22,6 @@
 // SOFTWARE.
 
 #include "pch.h"
-#include "lua_module.h"
 #include "lua_texture.h"
 #include "lua_vector.h"
 #include "lua_quat.h"
@@ -74,7 +73,7 @@ sol::table open(sol::this_state ts)
 {
 	sol::state_view lua(ts);
 	sol::table module = lua.create_table();
-	module["VERSION"] = "1.0.0";
+	module["VERSION"] = "1.1.0";
 
 	lua_vector::inizialize(module);
 	lua_quat::initialize(module);
@@ -92,7 +91,10 @@ sol::table open(sol::this_state ts)
 	return module;
 }
 
-SOL_MODULE_ENTRYPOINT(open);
+extern "C" __declspec(dllexport) int luaopen_MoonAdditions(lua_State* L)
+{
+	return (sol::c_call<decltype(&(open)), &(open)>)(L);
+}
 
 BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 {

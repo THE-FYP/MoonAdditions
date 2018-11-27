@@ -62,7 +62,7 @@ namespace lua_shape
 
 	void Shape::Vertex::setColor(CRGBA color)
 	{
-		emissiveColor = CRGBA{color.blue, color.green, color.red, color.alpha}.AsInt();
+		emissiveColor = color.ToIntARGB();
 	}
 
 	CRGBA Shape::Vertex::getColor() const

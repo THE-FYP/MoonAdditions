@@ -32,7 +32,7 @@
 #include "game_sa/CShadows.h"
 #include "game_sa/CPointLights.h"
 #include "game_sa/CCoronas.h"
-#include "game_sa/CTimeCycleInfo.h"
+#include "game_sa/CTimeCycle.h"
 #include "game_sa/CWeather.h"
 #include "game_sa/CProjectileInfo.h"
 #include "game_sa/CMenuManager.h"
@@ -239,27 +239,27 @@ namespace lua_general
 		CVector pos{x, y, z};
 		CRGBA clr = color.value_or(CRGBA{255, 255, 255, 255});
 		// #todo fix flickering
-		CCoronas::RegisterCorona(CCoronas::NumCoronas, reinterpret_cast<CEntity*>(entity.value_or(0)), clr.red, clr.green, clr.blue, clr.alpha,
-								 pos, size, 100.0f, rwTexture, 0, false, false, 0, 0.0f, false, 0.15f, 0, 15.0f, false, false);
+		CCoronas::RegisterCorona(CCoronas::NumCoronas, reinterpret_cast<CEntity*>(entity.value_or(0)), clr.r, clr.g, clr.b, clr.a,
+								 pos, size, 100.0f, rwTexture, FLARETYPE_NONE, false, false, 0, 0.0f, false, 0.15f, 0, 15.0f, false, false);
 	}
 
 	void addCoronaEx(sol::object texture, float x, float y, float z, float size, opt<CRGBA> color, opt<uintptr_t> entity, opt<float> farClip, opt<float> nearClip,
-					 opt<byte> flare, opt<bool> reflection, opt<bool> checkObstacles, opt<byte> flashWhileFading, opt<float> fadeSpeed, opt<bool> onlyFromBelow)
+					 opt<eCoronaFlareType> flare, opt<bool> reflection, opt<bool> checkObstacles, opt<byte> flashWhileFading, opt<float> fadeSpeed, opt<bool> onlyFromBelow)
 	{
 		RwTexture* rwTexture = detail::getCoronaTexture(texture);
 		if (!rwTexture)
 			return;
 		CVector pos{x, y, z};
 		CRGBA clr = color.value_or(CRGBA{255, 255, 255, 255});
-		CCoronas::RegisterCorona(CCoronas::NumCoronas, reinterpret_cast<CEntity*>(entity.value_or(0)), clr.red, clr.green, clr.blue, clr.alpha,
-								 pos, size, farClip.value_or(100.0f), rwTexture, flare.value_or(0), reflection.value_or(false),
+		CCoronas::RegisterCorona(CCoronas::NumCoronas, reinterpret_cast<CEntity*>(entity.value_or(0)), clr.r, clr.g, clr.b, clr.a,
+								 pos, size, farClip.value_or(100.0f), rwTexture, flare.value_or(FLARETYPE_NONE), reflection.value_or(false),
 								 checkObstacles.value_or(false), 0, 0.0f, false, nearClip.value_or(0.15f), flashWhileFading.value_or(0),
 								 fadeSpeed.value_or(15.0f), onlyFromBelow.value_or(false), false);
 	}
 
 	std::tuple<int, int, int, int, int, int> getSunColors()
 	{
-		unsigned short* color = &TimeCycleInfo->m_nCurrentSunCoreRed;
+		unsigned char* color = CTimeCycle::m_nSunCoreRed;
 		return {color[0], color[1], color[2], color[3], color[4], color[5]};
 	}
 
@@ -277,7 +277,7 @@ namespace lua_general
 	
 	std::tuple<float, float> getSunSize()
 	{
-		float size = TimeCycleInfo->m_fCurrentSunSize;
+		float size = *CTimeCycle::m_fSunSize;
 		return {size * 2.7335f, size * 6.0f};
 	}
 
@@ -325,7 +325,7 @@ namespace lua_general
 			CVehicle* vehicle = CPools::GetVehicle(carHandle);
 			if (vehicle)
 			{
-				auto vehModel = static_cast<CVehicleModelInfo*>(CModelInfo::GetModelInfo(vehicle->m_wModelIndex));
+				auto vehModel = static_cast<CVehicleModelInfo*>(CModelInfo::GetModelInfo(vehicle->m_nModelIndex));
 				if (vehModel && vehModel->m_pVehicleStruct)
 				{
 					pos = vehModel->m_pVehicleStruct->m_avDummyPos[element];
@@ -427,7 +427,7 @@ namespace lua_general
 			{
 				CVector diff = coords - ent->GetPosition();
 				if ((sphere.value_or(false) ? diff.Magnitude2D() : diff.Magnitude()) <= radius.value_or(1000.0f))
-					objects.add(pool->GetHandle(ent));
+					objects.add(pool->GetRef(ent));
 			}
 		}
 		return objects;

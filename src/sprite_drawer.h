@@ -22,9 +22,6 @@
 // SOFTWARE.
 
 #pragma once
-#include "game_sa\CRect.h"
-#include "game_sa\CRGBA.h"
-#include "game_sa\RenderWare.h"
 #include "drawer.h"
 #include "singleton.h"
 #include "forward_declarations.h"

@@ -1,7 +1,6 @@
 #pragma once
 #include "sol.hpp"
-#include "plugin_sa/plugin.h"
-
+#include "plugin.h"
 
 namespace sol
 {
@@ -48,7 +47,7 @@ namespace sol
 		{
 			static int push(lua_State* L, const CRGBA& color)
 			{
-				int amount = stack::multi_push(L, color.red, color.green, color.blue, color.alpha);
+				int amount = stack::multi_push(L, color.r, color.g, color.b, color.a);
 				return amount;
 			}
 		};

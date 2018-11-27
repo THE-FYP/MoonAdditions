@@ -23,7 +23,6 @@
 
 #include "pch.h"
 #include "lua_bone.h"
-#include "plugin_sa/plugin.h"
 #include "game_sa/CPed.h"
 #include "game_sa/common.h"
 #include "game_sa/ePedBones.h"
@@ -42,7 +41,7 @@ namespace lua_bone
 
 		uintptr_t getRawPointer() const { return reinterpret_cast<uintptr_t>(_boneData); }
 		CMatrix* getMatrix() const;
-		CVector* getOffsetVector() const { return &_boneData->m_vOffset; }
+		CVector* getOffsetVector() const { return &_boneData->m_vecOffset; }
 		CQuaternion* getQuaternion() const;
 
 	private:
@@ -60,7 +59,7 @@ namespace lua_bone
 		}
 		else
 		{
-			auto index = RpHAnimIDGetIndex(hierarchy, _boneData->m_dwNodeId);
+			auto index = RpHAnimIDGetIndex(hierarchy, _boneData->m_nNodeId);
 			return reinterpret_cast<CMatrix*>(&hierarchy->pMatrixArray[index]);
 		}
 	}

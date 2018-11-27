@@ -38,7 +38,7 @@ namespace lua_txd
 	{
 		if (txdId != -1)
 		{
-			if (!CTxdStore::ms_pTxdPool->m_byteMap[txdId].a.bIsFreeSlot)
+			if (!CTxdStore::ms_pTxdPool->m_byteMap[txdId].bEmpty)
 			{
 				auto dictionary = CTxdStore::ms_pTxdPool->m_pObjects[txdId].m_pRwDictionary;
 				auto texture = RwTexDictionaryFindNamedTexture(dictionary, textureName.c_str());

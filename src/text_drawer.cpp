@@ -30,10 +30,10 @@ void DisplayText::draw() const
 {
 	CFont::SetScale(_width, _height);
 	CFont::SetFontStyle(_style);
-	CFont::SetProp(_proportional);
+	CFont::SetProportional(_proportional);
 	CFont::SetJustify(_justify);
-	CFont::SetAlignment(_alignment);
-	CFont::SetOutlinePosition(_outline);
+	CFont::SetOrientation(_alignment);
+	CFont::SetEdge(_outline);
 	if (!_outline)
 		CFont::SetDropShadowPosition(_shadow);
 	if (_outline || _shadow)

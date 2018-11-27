@@ -23,8 +23,6 @@
 
 #pragma once
 #include <unordered_map>
-#include "plugin_sa/plugin.h"
-
 
 template<typename ObjT, typename DataT>
 class ExtendedObjectDataPool
