@@ -2,7 +2,7 @@ package = "moonadditions"
 version = "1.1.0-1"
 source = {
    url = "git+https://github.com/THE-FYP/MoonAdditions.git",
-   branch = "luarocks"
+   tag = "v1.1.0"
 }
 description = {
    summary = "A bunch of useful things for MoonLoader",
