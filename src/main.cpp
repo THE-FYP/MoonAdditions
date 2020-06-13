@@ -75,7 +75,7 @@ sol::table open(sol::this_state ts)
 	sol::table module = lua.create_table();
 	module["VERSION"] = "1.1.0";
 
-	lua_vector::inizialize(module);
+	lua_vector::initialize(module);
 	lua_quat::initialize(module);
 	lua_matrix::initialize(module);
 	lua_texture::initialize(module);
