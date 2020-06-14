@@ -31,5 +31,5 @@ inline bool operator==(const CVector& lhs, const CVector& rhs)
 
 namespace lua_vector
 {
-	void inizialize(sol::table& module);
+	void initialize(sol::table& module);
 }

@@ -57,7 +57,7 @@ namespace lua_vector
 		return CVector{vec.x, vec.y, vec.z};
 	}
 
-	void inizialize(sol::table& module)
+	void initialize(sol::table& module)
 	{
 		module.new_usertype<CVector>("vector3d",
 									 "new", sol::factories(&constructEmpty, &constructFromValues, &constructFromVector),
