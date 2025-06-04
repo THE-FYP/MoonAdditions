@@ -23,6 +23,7 @@
 
 #pragma once
 #include "singleton.h"
+#include "extender/VehicleExtender_SA.h"
 #include "forward_declarations.h"
 #include "pool_object_extender.h"
 
@@ -32,11 +33,20 @@ class VehicleRenderer : public Singleton<VehicleRenderer>
 	struct MaterialProperties
 	{
 		MaterialProperties() :
-			_color{0, 0, 0, 0},
+			_color{ 0, 0, 0, 0 },
+			_ambient(0.5f),
+			_diffuse(1.0f),
+			_specular(1.0f),
 			_recolor(false),
 			_retexture(false),
-			_originalColor{0, 0, 0, 0},
+			_reAmbient(false),
+			_reDiffuse(false),
+			_reSpecular(false),
+			_originalColor{ 0, 0, 0, 0 },
 			_originalTexture(nullptr),
+			_originalAmbient(0.5f),
+			_originalDiffuse(1.0f),
+			_originalSpecular(1.0f),
 			_originalGeometryFlags(0),
 			_geometry(nullptr)
 		{
@@ -50,6 +60,15 @@ class VehicleRenderer : public Singleton<VehicleRenderer>
 		RwRGBA _originalColor;
 		RwTexture* _originalTexture;
 		RwInt32 _originalGeometryFlags;
+		RwReal _ambient;
+		bool _reAmbient;
+		RwReal _diffuse;
+		bool _reDiffuse;
+		RwReal _specular;
+		bool _reSpecular;
+		RwReal _originalAmbient;
+		RwReal _originalDiffuse;
+		RwReal _originalSpecular;
 	};
 
 	struct VehicleData
@@ -66,6 +85,15 @@ public:
 	void setMaterialTexture(CVehicle* veh, RpMaterial* material, std::shared_ptr<lua_texture::Texture> texture);
 	void resetMaterialColor(CVehicle* veh, RpMaterial* material);
 	void resetMaterialTexture(CVehicle* veh, RpMaterial* material);
+	void setMaterialAmbient(CVehicle* veh, RpMaterial* material, RwReal ambient);
+	void setMaterialDiffuse(CVehicle* veh, RpMaterial* material, RwReal diffuse);
+	void setMaterialSpecular(CVehicle* veh, RpMaterial* material, RwReal specular);
+	void resetMaterialAmbient(CVehicle* veh, RpMaterial* material);
+	void resetMaterialDiffuse(CVehicle* veh, RpMaterial* material);
+	void resetMaterialSpecular(CVehicle* veh, RpMaterial* material);
+	const MaterialProperties* getMaterialProperties(CVehicle* veh, RpMaterial* material) const;
+	void setMaterialSurfaceProperties(CVehicle* veh, RpMaterial* material, RwReal ambient, RwReal diffuse, RwReal specular);
+	void resetMaterialSurfaceProperties(CVehicle* veh, RpMaterial* material);
 	void processRender(CVehicle* veh);
 	void postRender(CVehicle* veh);
 	bool isInitialized() const { return _vehicleData != nullptr; }

@@ -73,6 +73,107 @@ void VehicleRenderer::resetMaterialTexture(CVehicle* veh, RpMaterial* material)
 	}
 }
 
+void VehicleRenderer::setMaterialAmbient(CVehicle* veh, RpMaterial* material, RwReal ambient)
+{
+	auto& matProps = getVehicleMaterialProperties(veh)[material];
+	matProps._reAmbient = true;
+	matProps._ambient = ambient;
+}
+
+void VehicleRenderer::setMaterialDiffuse(CVehicle* veh, RpMaterial* material, RwReal diffuse)
+{
+	auto& matProps = getVehicleMaterialProperties(veh)[material];
+	matProps._reDiffuse = true;
+	matProps._diffuse = diffuse;
+}
+
+void VehicleRenderer::setMaterialSpecular(CVehicle* veh, RpMaterial* material, RwReal specular)
+{
+	auto& matProps = getVehicleMaterialProperties(veh)[material];
+	matProps._reSpecular = true;
+	matProps._specular = specular;
+}
+
+void VehicleRenderer::resetMaterialAmbient(CVehicle* veh, RpMaterial* material)
+{
+	if (isInitialized() && _vehicleData->exists(veh))
+	{
+		auto& props = _vehicleData->get(veh)._materialProperties;
+		auto it = props.find(material);
+		if (it != props.end())
+		{
+			it->second._reAmbient = false;
+		}
+	}
+}
+
+void VehicleRenderer::resetMaterialDiffuse(CVehicle* veh, RpMaterial* material)
+{
+	if (isInitialized() && _vehicleData->exists(veh))
+	{
+		auto& props = _vehicleData->get(veh)._materialProperties;
+		auto it = props.find(material);
+		if (it != props.end())
+		{
+			it->second._reDiffuse = false;
+		}
+	}
+}
+
+void VehicleRenderer::resetMaterialSpecular(CVehicle* veh, RpMaterial* material)
+{
+	if (isInitialized() && _vehicleData->exists(veh))
+	{
+		auto& props = _vehicleData->get(veh)._materialProperties;
+		auto it = props.find(material);
+		if (it != props.end())
+		{
+			it->second._reSpecular = false;
+		}
+	}
+}
+
+void VehicleRenderer::setMaterialSurfaceProperties(CVehicle* veh, RpMaterial* material, RwReal ambient, RwReal diffuse, RwReal specular)
+{
+	auto& matProps = getVehicleMaterialProperties(veh)[material];
+	matProps._reAmbient = true;
+	matProps._ambient = ambient;
+	matProps._reDiffuse = true;
+	matProps._diffuse = diffuse;
+	matProps._reSpecular = true;
+	matProps._specular = specular;
+}
+
+void VehicleRenderer::resetMaterialSurfaceProperties(CVehicle* veh, RpMaterial* material)
+{
+	if (isInitialized() && _vehicleData->exists(veh))
+	{
+		auto& props = _vehicleData->get(veh)._materialProperties;
+		auto it = props.find(material);
+		if (it != props.end())
+		{
+			it->second._reAmbient = false;
+			it->second._reDiffuse = false;
+			it->second._reSpecular = false;
+		}
+	}
+}
+
+
+const VehicleRenderer::MaterialProperties* VehicleRenderer::getMaterialProperties(CVehicle* veh, RpMaterial* material) const
+{
+	if (_vehicleData && _vehicleData->exists(veh))
+	{
+		auto& props = _vehicleData->get(veh)._materialProperties;
+		auto it = props.find(material);
+		if (it != props.end())
+			return &it->second;
+	}
+	return nullptr;
+}
+
+
+
 void VehicleRenderer::processRender(CVehicle* veh)
 {
 	if (isInitialized() && _vehicleData->exists(veh))
@@ -99,6 +200,22 @@ void VehicleRenderer::processRender(CVehicle* veh)
 					it.second._retexture = false;
 				}
 			}
+
+			if (it.second._reAmbient)
+			{
+				it.second._originalAmbient = it.first->surfaceProps.ambient;
+				it.first->surfaceProps.ambient = it.second._ambient;
+			}
+			if (it.second._reDiffuse)
+			{
+				it.second._originalDiffuse = it.first->surfaceProps.diffuse;
+				it.first->surfaceProps.diffuse = it.second._diffuse;
+			}
+			if (it.second._reSpecular)
+			{
+				it.second._originalSpecular = it.first->surfaceProps.specular;
+				it.first->surfaceProps.specular = it.second._specular;
+			}
 		}
 	}
 }
@@ -117,6 +234,18 @@ void VehicleRenderer::postRender(CVehicle* veh)
 			if (it.second._retexture)
 			{
 				it.first->texture = it.second._originalTexture;
+			}
+			if (it.second._reAmbient)
+			{
+				it.first->surfaceProps.ambient = it.second._originalAmbient;
+			}
+			if (it.second._reDiffuse)
+			{
+				it.first->surfaceProps.diffuse = it.second._originalDiffuse;
+			}
+			if (it.second._reSpecular)
+			{
+				it.first->surfaceProps.specular = it.second._originalSpecular;
 			}
 		}
 	}

@@ -63,7 +63,7 @@ namespace lua_component
 
 		void setColor(CRGBA color)
 		{
-			VehicleRenderer::get()->setMaterialColor(_vehicle, _material, _geometry, {color.r, color.g, color.b, color.a});
+			VehicleRenderer::get()->setMaterialColor(_vehicle, _material, _geometry, {color.red, color.green, color.blue, color.alpha});
 		}
 
 		CRGBA getColor() const
@@ -92,6 +92,87 @@ namespace lua_component
 		void resetTexture()
 		{
 			VehicleRenderer::get()->resetMaterialTexture(_vehicle, _material);
+		}
+
+
+		void VehicleMaterial::setAmbient(RwReal ambient)
+		{
+			VehicleRenderer::get()->setMaterialAmbient(_vehicle, _material, ambient);
+		}
+
+		RwReal VehicleMaterial::getAmbient() const
+		{
+			const auto* matProps = VehicleRenderer::get()->getMaterialProperties(_vehicle, _material);
+			if (matProps && matProps->_reAmbient)
+				return matProps->_ambient;
+			else
+				return _material->surfaceProps.ambient;
+		}
+
+		void VehicleMaterial::resetAmbient()
+		{
+			VehicleRenderer::get()->resetMaterialAmbient(_vehicle, _material);
+		}
+
+		void VehicleMaterial::setDiffuse(RwReal diffuse)
+		{
+			VehicleRenderer::get()->setMaterialDiffuse(_vehicle, _material, diffuse);
+		}
+
+		RwReal VehicleMaterial::getDiffuse() const
+		{
+			const auto* matProps = VehicleRenderer::get()->getMaterialProperties(_vehicle, _material);
+			if (matProps && matProps->_reDiffuse)
+				return matProps->_diffuse;
+			else
+				return _material->surfaceProps.diffuse;
+		}
+
+		void VehicleMaterial::resetDiffuse()
+		{
+			VehicleRenderer::get()->resetMaterialDiffuse(_vehicle, _material);
+		}
+
+		void VehicleMaterial::setSpecular(RwReal specular)
+		{
+			VehicleRenderer::get()->setMaterialSpecular(_vehicle, _material, specular);
+		}
+
+		RwReal VehicleMaterial::getSpecular() const
+		{
+			const auto* matProps = VehicleRenderer::get()->getMaterialProperties(_vehicle, _material);
+			if (matProps && matProps->_reSpecular)
+				return matProps->_specular;
+			else
+				return _material->surfaceProps.specular;
+		}
+
+		void VehicleMaterial::resetSpecular()
+		{
+			VehicleRenderer::get()->resetMaterialSpecular(_vehicle, _material);
+		}
+
+		sol::table VehicleMaterial::getSurfaceProperties(sol::this_state ts) const
+		{
+			sol::table props = sol::state_view{ ts }.create_table();
+			const auto* matProps = VehicleRenderer::get()->getMaterialProperties(_vehicle, _material);
+			props["ambient"] = matProps && matProps->_reAmbient ? matProps->_ambient : _material->surfaceProps.ambient;
+			props["diffuse"] = matProps && matProps->_reDiffuse ? matProps->_diffuse : _material->surfaceProps.diffuse;
+			props["specular"] = matProps && matProps->_reSpecular ? matProps->_specular : _material->surfaceProps.specular;
+			return props;
+		}
+
+		void VehicleMaterial::setSurfaceProperties(sol::table props)
+		{
+			RwReal ambient = props.get_or("ambient", _material->surfaceProps.ambient);
+			RwReal diffuse = props.get_or("diffuse", _material->surfaceProps.diffuse);
+			RwReal specular = props.get_or("specular", _material->surfaceProps.specular);
+			VehicleRenderer::get()->setMaterialSurfaceProperties(_vehicle, _material, ambient, diffuse, specular);
+		}
+
+		void VehicleMaterial::resetSurfaceProperties()
+		{
+			VehicleRenderer::get()->resetMaterialSurfaceProperties(_vehicle, _material);
 		}
 
 		uintptr_t getRawPointer() const
@@ -132,7 +213,7 @@ namespace lua_component
 			return (RpAtomicGetVisibilityPlugin(_atomic)->m_wFlags & flag) != 0;
 		}
 
-		void setAtomicFlag(unsigned short flag, bool value)
+		void setAtomicFlag(unsigned int flag, bool value)
 		{
 			if (value)
 				CVisibilityPlugins::SetAtomicFlag(_atomic, flag);
@@ -336,7 +417,20 @@ namespace lua_component
 										"reset_color", &VehicleMaterial::resetColor,
 										"set_texture", &VehicleMaterial::setTexture,
 										"get_texture", &VehicleMaterial::getTexture,
-										"reset_texture", &VehicleMaterial::resetTexture);
+										"reset_texture", &VehicleMaterial::resetTexture,
+								        "set_ambient", &VehicleMaterial::setAmbient,
+										"get_ambient", &VehicleMaterial::getAmbient,
+										"reset_ambient", &VehicleMaterial::resetAmbient,
+										"set_diffuse", &VehicleMaterial::setDiffuse,
+										"get_diffuse", &VehicleMaterial::getDiffuse,
+										"reset_diffuse", &VehicleMaterial::resetDiffuse,
+										"set_specular", &VehicleMaterial::setSpecular,
+										"get_specular", &VehicleMaterial::getSpecular,
+										"reset_specular", &VehicleMaterial::resetSpecular,
+										"get_properties", & VehicleMaterial::getSurfaceProperties,
+										"set_properties", & VehicleMaterial::setSurfaceProperties,
+										"reset_properties", & VehicleMaterial::resetSurfaceProperties);
+
 		module.new_enum<false>("component_state",
 						"DISABLED", VISIBILITY_DISABLED,
 						"ENABLED", VISIBILITY_ENABLED,
